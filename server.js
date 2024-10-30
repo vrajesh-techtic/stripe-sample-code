@@ -2,9 +2,9 @@ const express = require("express");
 const app = express();
 const { resolve } = require("path");
 // Replace if using a different env file or config
-const env = require("dotenv").config({ path: "../.env" });
+require("dotenv").config();
 const cors = require("cors");
-console.log("process.env.STATIC_DIR", env);
+// console.log("process.env.STATIC_DIR", env);
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2020-08-27",
   appInfo: {

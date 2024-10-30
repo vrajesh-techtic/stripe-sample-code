@@ -4,7 +4,7 @@
       "name": "Identity-API-4242",
       "script": "npm",
       "args": "start",
-      "cwd": "/var/www/html/stripe-sample-code/server",
+      "cwd": "/var/www/html/stripe-sample-code",
       "env": {
         "NODE_ENV": "production",
         "PORT": 4242
