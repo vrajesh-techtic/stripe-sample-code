@@ -4,6 +4,7 @@ const { resolve } = require("path");
 // Replace if using a different env file or config
 require("dotenv").config();
 const cors = require("cors");
+const morgan = require("morgan");
 // console.log("process.env.STATIC_DIR", env);
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2020-08-27",
@@ -16,6 +17,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
 });
 
 app.use(cors({ allowedHeaders: "*" }));
+app.use(morgan("dev"));
 // app.use(express.static(process.env.STATIC_DIR));
 app.use(
   express.json({
@@ -30,12 +32,12 @@ app.use(
 );
 
 app.get("/", (req, res) => {
-  const path = resolve(process.env.STATIC_DIR + "/index.html");
-  res.sendFile(path);
+  // const path = resolve(process.env.STATIC_DIR + "/index.html");
+  return res.sendStatus(200);
 });
 
 app.get("/api/config", (req, res) => {
-  res.send({
+  return res.send({
     publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
   });
 });
@@ -70,7 +72,7 @@ app.post("/create-verification-session", async (req, res) => {
       });
 
     // Send publishable key and PaymentIntent details to client
-    res.send({
+    return res.send({
       client_secret: verificationSession.client_secret,
     });
   } catch (e) {
@@ -148,7 +150,7 @@ app.post("/webhook", async (req, res) => {
       }
     }
   }
-  res.sendStatus(200);
+  return res.sendStatus(200);
 });
 
 app.listen(4242, () =>
